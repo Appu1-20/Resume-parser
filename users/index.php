@@ -21,8 +21,8 @@
 		$uid=$_SESSION['user']['uid'];
 		$designation=$_POST['designation'];
 		$query = "INSERT INTO personal (fname, lname, designation, uid) 
-                  VALUES(".$fname.", ".$lname.", ".$designation.", ".$uid.")";
-                  // echo $query;
+                  VALUES('$fname', '$lname', '$designation', $uid)";
+                  // echo $query;die;
 		// $query="insert INTO personal set fname=".$fname.", lname=".$lname.", designation=".$designation." , uid=".$_SESSION['user']['uid'];
 		// echo $query;die;
 		mysqli_query($link,$query) or die("Error updating data.".mysqli_error($link));
@@ -59,7 +59,7 @@
 				<div class="col-md-10 col-md-offset-1">
 					<form method="post" enctype="multipart/form-data" class="form-inline">
 						<div class="form-group ">
-							<img src="../<?php echo $personaldetails['image']; ?>" class="img-thumbnail"/>
+							<img src="../<?= isset($personaldetails['image']) ? $personaldetails['image']: ''; ?>" class="img-thumbnail"/>
 						</div>
 						<div class="form-group ">
 							<input id="profilePhotoIn" type="file" name="profilepic">
@@ -74,19 +74,19 @@
 					<div class="form-group">
 					  <div class="input-group">
 						<span class="input-group-addon">First Name</span>
-						<input type="text" class="form-control" name="fName" value="<?php echo ucfirst($personaldetails['fname']); ?>">
+						<input type="text" class="form-control" name="fName" value="<?= ucfirst(isset($personaldetails['fname']) ? $personaldetails['fname'] : ''); ?>">
 					  </div>
 					</div>
 					<div class="form-group">
 					  <div class="input-group">
 						<span class="input-group-addon">Last Name</span>
-						<input type="text" class="form-control" name="lName" value="<?php echo ucfirst($personaldetails['lname']); ?>">
+						<input type="text" class="form-control" name="lName" value="<?= ucfirst(isset($personaldetails['lname']) ? $personaldetails['lname'] : ''); ?>">
 					  </div>
 					</div>
 					<div class="form-group">
 					  <div class="input-group">
 						<span class="input-group-addon">Designation</span>
-						<input type="text" class="form-control" name="designation" value="<?php echo ucfirst($personaldetails['designation']); ?>">
+						<input type="text" class="form-control" name="designation" value="<?= ucfirst(isset($personaldetails['designation']) ? $personaldetails['designation'] : ''); ?>">
 					  </div>
 					</div>
 					<div class="form-group clearfix">
@@ -99,19 +99,19 @@
 					<div class="form-group">
 					  <div class="input-group">
 						<span class="input-group-addon">Phone Number</span>
-						<input type="text" class="form-control" name="phone" value="<?php echo $personaldetails['phone']; ?>">
+						<input type="text" class="form-control" name="phone" value="<?= isset($personaldetails['phone']) ? $personaldetails['phone'] : ''; ?>">
 					  </div>
 					</div>
 					<div class="form-group">
 					  <div class="input-group">
 						<span class="input-group-addon">Mail ID</span>
-						<input type="text" class="form-control" name="email" value="<?php echo $personaldetails['email']; ?>">
+						<input type="text" class="form-control" name="email" value="<?= isset($personaldetails['email']) ? $personaldetails['email'] : ''; ?>">
 					  </div>
 					</div>
 					<div class="form-group">
 					  <div class="input-group">
 						<span class="input-group-addon">Website</span>
-						<input type="text" class="form-control" name="web" value="<?php echo $personaldetails['website']; ?>">
+						<input type="text" class="form-control" name="web" value="<?= isset($personaldetails['website']) ? $personaldetails['website'] : ''; ?>">
 					  </div>
 					</div>
 					<div class="form-group clearfix">
@@ -131,7 +131,7 @@
 				<form method="post">
 					<h4>Basic Information</h4>
 					<div class="form-group">
-						<textarea class="form-control" rows="10" name="info" id="myInfo"><?php echo $homecontent['data'] ?></textarea>
+						<textarea class="form-control" rows="10" name="info" id="myInfo"><?= isset($homecontent['data'])?$homecontent['data']:''; ?></textarea>
 					</div>
 					<div class="form-group clearfix">
 						<button type="submit" class="btn btn-success pull-right" name="basicInfo">Update</button>
@@ -152,25 +152,25 @@
 					<div class="form-group">
 					  <div class="input-group">
 						<span class="input-group-addon">Facebook</span>
-						<input type="text" class="form-control" name="facebook" value="<?php echo $socialdetails['facebook']; ?>">
+						<input type="text" class="form-control" name="facebook" value="<?= isset($socialdetails['facebook'])?$socialdetails['facebook']:''; ?>">
 					  </div>
 					</div>
 					<div class="form-group">
 					  <div class="input-group">
 						<span class="input-group-addon">Twitter</span>
-						<input type="text" class="form-control" name="twitter" value="<?php echo $socialdetails['twitter']; ?>">
+						<input type="text" class="form-control" name="twitter" value="<?= isset($socialdetails['twitter'])?$socialdetails['twitter']:''; ?>">
 					  </div>
 					</div>
 					<div class="form-group">
 					  <div class="input-group">
 						<span class="input-group-addon">Google+</span>
-						<input type="text" class="form-control" name="googleplus" value="<?php echo $socialdetails['googleplus']; ?>">
+						<input type="text" class="form-control" name="googleplus" value="<?= isset($socialdetails['googleplus'])?$socialdetails['googleplus']:''; ?>">
 					  </div>
 					</div>
 					<div class="form-group">
 					  <div class="input-group">
 						<span class="input-group-addon">Instagram</span>
-						<input type="text" class="form-control" name="instagram" value="<?php echo $socialdetails['instagram']; ?>">
+						<input type="text" class="form-control" name="instagram" value="<?= isset($socialdetails['instagram'])?$socialdetails['instagram']:''; ?>">
 					  </div>
 					</div>
 					<div class="form-group clearfix">
