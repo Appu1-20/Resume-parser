@@ -1,31 +1,33 @@
 <?php
 	include 'includes/session.php';
-	// var_dump($_POST);die;
 
 	if(isset($_POST['edit'])){
-		$id = $_POST['id'];
-		$uname = $_POST['uname'];
-		$lname = $_POST['lname'];
+		$uid = $_POST['id'];
+		$uname = $_POST['firstname'];
+		$lname = $_POST['lastname'];
 		$email = $_POST['email'];
-		$upass = $_POST['upass'];
+		$upass = $_POST['password'];
 		// $address = $_POST['address'];
 		// $contact = $_POST['contact'];
 
 		$conn = $pdo->open();
+
 		$stmt = $conn->prepare("SELECT * FROM user WHERE uid=:uid");
 		$stmt->execute(['uid'=>$uid]);
 		$row = $stmt->fetch();
 
 		if($upass == $row['upass']){
+			// If the provided password is the same as the current one, retain the current password
 			$upass = $row['upass'];
 		}
 		else{
+			// If the password has changed, hash the new password
 			$upass = password_hash($upass, PASSWORD_DEFAULT);
 		}
 
 		try{
-			$stmt = $conn->prepare("UPDATE user SET email=:email, upass=:upass, uname=:uname, lname=:lname, address=:address, contact_info=:contact WHERE uid=:uid");
-			$stmt->execute(['email'=>$email, 'upass'=>$upass, 'uname'=>$uname, 'lname'=>$lname, 'address'=>$address, 'contact'=>$contact, 'id'=>$id]);
+			$stmt = $conn->prepare("UPDATE user SET email=:email, upass=:upass, uname=:uname, lname=:lname WHERE uid=:uid");
+			$stmt->execute(['email'=>$email, 'upass'=>$upass, 'uname'=>$uname, 'lname'=>$lname, 'uid'=>$uid]);
 			$_SESSION['success'] = 'User updated successfully';
 
 		}
@@ -33,7 +35,6 @@
 			$_SESSION['error'] = $e->getMessage();
 		}
 		
-
 		$pdo->close();
 	}
 	else{
@@ -41,5 +42,4 @@
 	}
 
 	header('location: users.php');
-
 ?>

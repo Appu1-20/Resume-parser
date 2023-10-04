@@ -121,9 +121,9 @@ $(function(){
 
   $(document).on('click', '.edit', function(e){
     e.preventDefault();
-    $('#edit').modal('show');
     var id = $(this).data('id');
     getRow(id);
+    $('#edit').modal('show');
   });
 
   $(document).on('click', '.delete', function(e){
@@ -150,18 +150,16 @@ $(function(){
 function getRow(id){
   $.ajax({
     type: 'POST',
-    url: 'users_row.php',
-    data: {id:id},
+    url: 'users_row.php', 
+    data: {uid:id},
     dataType: 'json',
     success: function(response){
-      $('.userid').val(response.id);
+      $('.userid').val(response.uid);
       $('#edit_email').val(response.email);
-      $('#edit_password').val(response.password);
-      $('#edit_firstname').val(response.firstname);
-      $('#edit_lastname').val(response.lastname);
-      $('#edit_address').val(response.address);
-      $('#edit_contact').val(response.contact_info);
-      $('.fullname').html(response.firstname+' '+response.lastname);
+      $('#edit_password').val(response.upass);
+      $('#edit_firstname').val(response.uname);
+      $('#edit_lastname').val(response.lname);
+      $('.fullname').html(response.uname+' '+response.lname);
     }
   });
 }

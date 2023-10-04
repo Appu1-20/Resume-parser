@@ -2,7 +2,7 @@
 	include 'includes/session.php';
 
 	if(isset($_POST['uid'])){
-		$id = $_POST['uid'];
+		$uid = $_POST['uid'];
 		
 		$conn = $pdo->open();
 
