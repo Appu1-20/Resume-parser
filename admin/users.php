@@ -67,7 +67,7 @@
                       $stmt = $conn->prepare("SELECT * FROM user WHERE user_type=:user_type");
                       $stmt->execute(['user_type'=>0]);
                       foreach($stmt as $row){
-                        $image = (!empty($row['photo'])) ? '../images/'.$row['photo'] : '../images/profile.jpg';
+                        $image = (!empty($row['photo'])) ? '../images/'.$row['photo'] : './image/logo.png';
                          $status = ($row['status']) ? '<span class="label label-success">active</span>' : '<span class="label label-danger">not verified</span>';
                         $active = (!$row['status']) ? '<span class="pull-right"><a href="#activate" class="status" data-toggle="modal" data-id="'.$row['uid'].'"><i class="fa fa-check-square-o"></i></a></span>' : '';
                         echo "
@@ -113,7 +113,9 @@
 </div>
 <!-- ./wrapper -->
 
-<?php include 'includes/scripts.php'; ?>
+<?php 
+include 'includes/scripts.php'; 
+?>
 <script>
 $(function(){
 

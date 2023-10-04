@@ -68,8 +68,8 @@ $(function(){
     $('.select2').select2()
 
     //CK Editor
-    CKEDITOR.replace('editor1')
-    CKEDITOR.replace('editor2')
+    // CKEDITOR.replace('editor1')
+    // CKEDITOR.replace('editor2')
   });
 </script>
 
