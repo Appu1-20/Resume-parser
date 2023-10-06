@@ -51,56 +51,34 @@ function reArrayFiles(&$file_post)
     return $file_ary;
 }
 
-if (isset($_POST) && isset($_POST['Do'])) {
+// Check if the form is submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Define the target directory for file uploads
     $target_dir = 'resume/';
+
+    // Create the 'resume' directory if it doesn't exist
     if (!is_dir($target_dir)) {
-        mkdir('resume');
+        mkdir($target_dir);
     }
-    $glob = glob('resume/*.*');
-    $glob = sprintf('%02d', count($glob) + 1);
-    $files = reArrayFiles($_FILES['offer-main']);
-    $details = [];
-    foreach ($files as $fileToUpload) {
-        // $fileToUpload = $_FILES['offer-main'];
-        $do = 'offer-main-form';
 
-        $uploadOk = 1;
-        $imageFileType = pathinfo($fileToUpload['filename'], PATHINFO_EXTENSION);
-        $target_file = $target_dir.$glob.'-'.$fileToUpload['filename'];
+    // Loop through the uploaded files
+    foreach ($_FILES['offer-main']['tmp_name'] as $key => $tmp_name) {
+        $file_name = $_FILES['offer-main']['name'][$key];
+        $target_file = $target_dir . $file_name;
 
-        $check = getimagesize($fileToUpload['tmp_name']);
-        if ($fileToUpload['size'] > 500000) {
-            $msg = 'Sorry, your file is too large.';
-            $uploadOk = 0;
-        }
-        // Allow certain file formats
-        if ($imageFileType != 'docx' && $imageFileType != 'doc' && $imageFileType != 'xlsx' && $imageFileType != 'pptx' && $imageFileType != 'pdf') {
-            $msg = 'Sorry, invalid file type.';
-            $uploadOk = 0;
-        }
-        // Check if $uploadOk is set to 0 by an error
-        if ($uploadOk == 0) {
-            // $msg = "Sorry, your file was not uploaded.";
-        // if everything is ok, try to upload file
+        // Check if the file already exists
+        if (file_exists($target_file)) {
+            echo "Sorry, the file $file_name already exists.";
         } else {
-            if (move_uploaded_file($fileToUpload['tmp_name'], $target_file)) {
-                $msg = 'The Resume has been uploaded.';
-
-                if ($imageFileType == 'pdf') {
-                    $pdfObj = new PdfParser();
-                    $resumeText = $pdfObj->parseFile($target_file);
-                    // $resumeText = $pdfObj->getText();
-                } else {
-                    $docObj = new DocxConversion($target_file);
-                    $resumeText = $docObj->convertToText();
-                }
-
-                    }
-                }
-
-                
+            // Move the uploaded file to the target directory
+            if (move_uploaded_file($_FILES['offer-main']['tmp_name'][$key], $target_file)) {
+                echo "The file $file_name has been uploaded successfully.";
+            } else {
+                echo "Sorry, there was an error uploading your file.";
+            }
         }
     }
+}
 
 
 ?>
@@ -136,11 +114,10 @@ if (isset($_POST) && isset($_POST['Do'])) {
                                             <div class="button" onClick="location.href='./index.php'" id="btn-offer-main">Create Resume</div>&nbsp;&nbsp;&nbsp;
                                         
                                          <div class="button1">
-                                            <input type="file" class="hidden" name="offer-main[]" multiple id="offer-main">
-                                            <input type="hidden" name="Do" value="ChangeOfferMain">
-                                            <input type="hidden" name="table" value="offer">
-                                            <div onclick="$('#offer-main').click()" id="btn-offer-main">Upload Resume</div>
-                                            <span id="info-offer-main"></span>
+                                            <form action="" method="post" enctype="multipart/form-data">
+                                                <input type="file" name="offer-main[]" multiple>
+                                                <input type="submit" name="Do" value="Upload Resume">
+                                                                                                                                                                                                                                                                                            </form>
                                         </div>
                                     </div>
                                     
@@ -155,10 +132,3 @@ if (isset($_POST) && isset($_POST['Do'])) {
 
 
         <?php include 'footer.php'; ?>
-    </div>
-
-</body>
-
-
-
-</html>

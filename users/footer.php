@@ -40,6 +40,6 @@
 		
 		</script>
 
-		
+		</div>
 	</body>
 </html>
