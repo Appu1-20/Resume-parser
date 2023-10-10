@@ -1,27 +1,28 @@
 <?php include 'includes/session.php'; ?>
 <?php include 'includes/header.php'; ?>
+
 <body class="hold-transition skin-blue sidebar-mini">
-<div class="wrapper">
+    <div class="wrapper">
 
-  <?php include 'includes/navbar.php'; ?>
-  <?php include 'includes/menubar.php'; ?>
+        <?php include 'includes/navbar.php'; ?>
+        <?php include 'includes/menubar.php'; ?>
 
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <h1>
-        Jobs List
-      </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Jobs List</li>
-      </ol>
-    </section>
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <h1>
+                    Jobs List
+                </h1>
+                <ol class="breadcrumb">
+                    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+                    <li class="active">Jobs List</li>
+                </ol>
+            </section>
 
-    <!-- Main content -->
-    <section class="content">
-      <?php
+            <!-- Main content -->
+            <section class="content">
+                <?php
         if(isset($_SESSION['error'])){
           echo "
             <div class='alert alert-danger alert-dismissible'>
@@ -43,24 +44,25 @@
           unset($_SESSION['success']);
         }
       ?>
-      <div class="row">
-        <div class="col-xs-12">
-          <div class="box">
-          <div class="box-header with-border">
-              <a href="#addnewjobs" data-toggle="modal" class="btn btn-primary btn-sm btn-flat"><i class="fa fa-plus"></i> New</a>
-            </div>
-            <div class="box-body">
-              <table class="table table-bordered" id="resumeList">
-                                <thead>
-                                  <tr>
-                                    <th>S.No</th>
-                                    <th>Job Title</th>
-                                    <th>Job Description</th>
-                                    <th>Tools</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                              <?php
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="box">
+                            <div class="box-header with-border">
+                                <a href="#addnewjobs" data-toggle="modal" class="btn btn-primary btn-sm btn-flat"><i
+                                        class="fa fa-plus"></i> New</a>
+                            </div>
+                            <div class="box-body">
+                                <table class="table table-bordered" id="resumeList">
+                                    <thead>
+                                        <tr>
+                                            <th>S.No</th>
+                                            <th>Job Title</th>
+                                            <th>Job Description</th>
+                                            <th>Tools</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
                               $conn = $pdo->open();
                               try{
                                 $stmt = $conn->prepare("SELECT * FROM jobs "); 
@@ -82,71 +84,77 @@
                                                 ?><td><?php echo $jobs['jdes'];
                                                 ?></td><?php
                                                 ?><td>
-                                <button class='btn btn-success btn-sm edit btn-flat' data-id=<?php echo $jobs['jid'] ?> ><i class='fa fa-edit'></i> Edit</button> 
-                              <button class='btn btn-danger btn-sm delete btn-flat' data-id=<?php echo $jobs['jid'] ?> ><i class='fa fa-trash'></i> Delete</button>
-                            </td><?php
+                                                <button class='btn btn-success btn-sm edit btn-flat'
+                                                    data-id=<?php echo $jobs['jid'] ?>><i class='fa fa-edit'></i>
+                                                    Edit</button>
+                                                <a class="btn-flat btn-danger btn-sm"
+                                                    href="job_deletes.php?id=<?php echo $jobs['jid'] ?>">
+                                                    <!-- <button class='btn btn-danger btn-sm delete btn-flat'><i
+                                                            class='fa fa-trash'></i> -->
+                                                    Delete
+                                                    <!-- </button> -->
+                                                </a>
+                                            </td><?php
                                                 ?></tr><?php
 
                                             }
                                         ?>
-                                </tbody>
-                              </table>
-            </div>
-          </div>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
         </div>
-      </div>
-    </section>
-     
-  </div>
-    <?php include 'includes/footer.php'; ?>
-    <?php include 'includes/jobs_modal.php'; ?>
+        <?php include 'includes/footer.php'; ?>
+        <?php include 'includes/jobs_modal.php'; ?>
 
-</div>
-<!-- ./wrapper -->
+    </div>
+    <!-- ./wrapper -->
 
-<?php include 'includes/scripts.php'; ?>
-<script>
-$(function(){
+    <?php include 'includes/scripts.php'; ?>
+    <script>
+    $(function() {
 
-  $(document).on('click', '.edit', function(e){
-    e.preventDefault();
-    $('#edit').modal('show');
-    var jid = $(this).data('jid');
-    getRow(jid);
-  });
+        $(document).on('click', '.edit', function(e) {
+            e.preventDefault();
+            $('#edit').modal('show');
+            var jid = $(this).data('jid');
+            getRow(jid);
+        });
 
-  $(document).on('click', '.delete', function(e){
-    e.preventDefault();
-    $('#delete').modal('show');
-    var jid = $(this).data('jid');
-    getRow(jid);
-  });
-
- 
+        $(document).on('click', '.delete', function(e) {
+            e.preventDefault();
+            $('#delete').modal('show');
+            var jid = $(this).data('jid');
+            getRow(jid);
+        });
 
 
-});
 
-function getRow(jid){
-  $.ajax({
-    type: 'POST',
-    url: 'jobs_row.php',
-    data: {id:id},
-    dataType: 'json',
-    success: function(response){
-      $('.jid').val(response.jid);
-      $('#edit_jtitle').val(response.jtitle);
-      $('#edit_jdes').val(response.jdes);
-      
-      // $('.fullname').html(response.firstname+' '+response.lastname);
+
+    });
+
+    function getRow(jid) {
+        $.ajax({
+            type: 'POST',
+            url: 'jobs_row.php',
+            data: {
+                id: id
+            },
+            dataType: 'json',
+            success: function(response) {
+                $('.jid').val(response.jid);
+                $('#edit_jtitle').val(response.jtitle);
+                $('#edit_jdes').val(response.jdes);
+
+                // $('.fullname').html(response.firstname+' '+response.lastname);
+            }
+        });
     }
-  });
-}
-</script>
+    </script>
 </body>
+
 </html>
-
-
-
-
-

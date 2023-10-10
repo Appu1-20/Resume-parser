@@ -1,26 +1,44 @@
 <style>
-    .button {
-  position: absolute; /* set button to an absolute position */
-  top: 50%; /* adjust the top position of the button */
-  left: 40%; /* adjust the left position of the button */
-  transform: translate(-50%, -50%); /* center the button */
-  z-index: 2; /* set a higher z-index than the image */
-  background-color: #007bff; /* set your desired background color */
-  color: #fff; /* set your desired text color */
-  border: none; /* remove button border */
-  padding: 10px 20px; /* set your desired padding */
-  cursor: pointer; /* change mouse cursor on hover */
+.button {
+    position: absolute;
+    /* set button to an absolute position */
+    top: 50%;
+    /* adjust the top position of the button */
+    left: 40%;
+    /* adjust the left position of the button */
+    transform: translate(-50%, -50%);
+    /* center the button */
+    z-index: 2;
+    /* set a higher z-index than the image */
+    background-color: #007bff;
+    /* set your desired background color */
+    color: #fff;
+    /* set your desired text color */
+    border: none;
+    /* remove button border */
+    padding: 10px 20px;
+    /* set your desired padding */
+    cursor: pointer;
+    /* change mouse cursor on hover */
 }
 
- .button1 {
-  position: absolute; /* set button to an absolute position */
-  top: 50%; /* adjust the top position of the button */
-  left: 60%; /* adjust the left position of the button */
-  transform: translate(-50%, -50%); /* center the button */
-  z-index: 2; /* set a higher z-index than the image */
-  border: none; /* remove button border */
-  padding: 10px 20px; /* set your desired padding */
-  cursor: pointer; /* change mouse cursor on hover */
+.button1 {
+    position: absolute;
+    /* set button to an absolute position */
+    top: 50%;
+    /* adjust the top position of the button */
+    left: 60%;
+    /* adjust the left position of the button */
+    transform: translate(-50%, -50%);
+    /* center the button */
+    z-index: 2;
+    /* set a higher z-index than the image */
+    border: none;
+    /* remove button border */
+    padding: 10px 20px;
+    /* set your desired padding */
+    cursor: pointer;
+    /* change mouse cursor on hover */
 }
 
 .button1 form input[type=submit] {
@@ -33,7 +51,7 @@
     border-radius: 3px;
 }
 
-.button1 form{
+.button1 form {
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -81,9 +99,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $target_file = $target_dir . $file_name;
 
         // Check if the file already exists
-        if (file_exists($target_file)) {
-            echo "Sorry, the file $file_name already exists.";
-        } else {
+        // if (file_exists($target_file)) {
+        //     echo "Sorry, the file $file_name already exists.";
+        // } else {
             // Move the uploaded file to the target directory
             if (move_uploaded_file($_FILES['offer-main']['tmp_name'][$key], $target_file)) {
                 // print_r( $target_file, true );die;
@@ -198,7 +216,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             } else {
                 echo "Sorry, there was an error uploading your file.";
             }
-        }
+        // }
     }
 }
 
@@ -227,30 +245,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 							}
 							?>
 
-                            
-                                <div class="carousel-inner">
-                                    <div class="item active" >
-                                        <img  src="../images/bg.jpg" width="1100" height="900" a>
-                                        <div class="form-group text-center">
-                                           
-                                            <div class="button" onClick="location.href='./index.php'" id="btn-offer-main">Create Resume</div>&nbsp;&nbsp;&nbsp;
-                                        
-                                         <div class="button1">
+
+                            <div class="carousel-inner">
+                                <div class="item active">
+                                    <img src="../images/bg.jpg" width="1100" height="900" a>
+                                    <div class="form-group text-center">
+
+                                        <div class="button" onClick="location.href='./index.php'" id="btn-offer-main">
+                                            Create Resume</div>&nbsp;&nbsp;&nbsp;
+
+                                        <div class="button1">
                                             <form action="" method="post" enctype="multipart/form-data">
                                                 <input type="file" name="offer-main[]" multiple>
                                                 <input type="submit" name="Do" value="Upload Resume">
-                                            </form>                                                                                                                                                                                                                                            </form>
+                                            </form>
+                                            </form>
                                         </div>
                                     </div>
-                                    
-                                </div>
-                                
-                           
-                                                        
-            </div>
-        </div>     
+
                                 </div>
 
 
 
-        <?php include 'footer.php'; ?>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <?php include 'footer.php'; ?>
