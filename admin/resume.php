@@ -83,8 +83,13 @@
                                                 ?></td><?php
                                                 ?><td><a href="../users/<?php echo $resume['filename'] ?>" target="_blank"><?php echo $resume['filename'];
                                                 ?></a></td><?php
-                                                ?><td><?php echo $resume['Name'];
-                                                ?></td><?php
+                                                ?><td>
+                                                  <a href="view.php?id=<?php echo $resume['id'] ?>">
+                                                  <?php echo $resume['Name'];
+                                                ?>
+                                                  </a>
+
+                                                </td><?php
                                                 ?><td><?php echo $resume['Contact'];
                                                 ?></td><?php
                                                 ?><td><?php echo $resume['Address'];
