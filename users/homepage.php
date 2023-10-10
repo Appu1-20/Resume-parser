@@ -133,11 +133,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     VALUES ('$target_file','$name', '$contact', '$address', '$skills', '$language', '$education', '$experience', '$projects')";
 
                             // Perform the insert operation
-                            if (mysqli_query($conn, $sql)) {
-                                echo "Data inserted successfully.";
-                            } else {
-                                echo "Error: " . mysqli_error($conn);
-                            }
+                            mysqli_query($conn, $sql);
+                            
                                 
                         } else {
                             // Execution failed, print the error
@@ -155,10 +152,49 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         print_r( $e, true ) . PHP_EOL, FILE_APPEND 
                     );
                 }
+                echo "The file $file_name has been uploaded successfully.<br>";
+
+                 $command = 'python jobs.py '.$target_file;
+
+                    $descriptorspec = array(
+                            0 => array('pipe', 'r'), // stdin
+                            1 => array('pipe', 'w'), // stdout
+                            2 => array('pipe', 'w'), // stderr
+                        );
+
+                    // Open the Python script process
+                    $process = proc_open($command, $descriptorspec, $pipes);
+
+                    if (is_resource($process)) {
+                        // Write the JSON data to the Python script
+                         fclose($pipes[0]);
+
+                        // Read the output from the Python script
+                        $output = stream_get_contents($pipes[1]);
+                        fclose($pipes[1]);
+
+                        // Read the error output from the Python script
+                        $error = stream_get_contents($pipes[2]);
+                        fclose($pipes[2]);
+
+                        // Close the Python script process
+                        $returnValue = proc_close($process);
+
+                        if ($returnValue === 0) {
+                            // $job = ($output, true);
+                            print_r($output);
+                            
+                                
+                        } else {
+                            // Execution failed, print the error
+                            echo 'Error: ' . $error;
+                        }
+                    } else {
+                        echo 'Error: Unable to start Python script.';
+                    }
 
 
                 
-                echo "The file $file_name has been uploaded successfully.";
             } else {
                 echo "Sorry, there was an error uploading your file.";
             }

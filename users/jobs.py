@@ -1,83 +1,115 @@
-def fetch_job_listings_from_database():
-    # Establish a database connection
-    connection = mysql.connector.connect(
-        host="localhost",
-        user="root",
-        password="",
-        database="myresume"
-    )
+import mysql.connector
+
+def establish_db_connection():
+    try:
+        connection = mysql.connector.connect(
+            host="localhost",
+            user="root",
+            password="",
+            database="myresume"
+        )
+        return connection
+    except mysql.connector.Error as err:
+        print(f"Error: {err}")
+        return None
+
+def close_db_connection(connection):
+    if connection:
+        connection.close()
+
+def fetch_job_listings():
+    connection = establish_db_connection()
+    if not connection:
+        return []
 
     cursor = connection.cursor()
-
-
-    # Define your SQL query to retrieve job listings
     query = "SELECT jtitle, jdes FROM jobs"
+    
+    try:
+        cursor.execute(query)
+        job_listings = cursor.fetchall()
+        return job_listings
+    except mysql.connector.Error as err:
+        print(f"Error fetching job listings: {err}")
+        return []
+    finally:
+        cursor.close()
+        close_db_connection(connection)
 
-    # Execute the SQL query
-    cursor.execute(query)
+def fetch_resume_skills():
+    connection = establish_db_connection()
+    if not connection:
+        return []
 
-    # Fetch all job listings
-    job_listings = cursor.fetchall()
+    cursor = connection.cursor()
+    query = "SELECT skills FROM resume"
+    
+    try:
+        cursor.execute(query)
+        resume_skills = [row[0] for row in cursor.fetchall()]
+        return resume_skills
+    except mysql.connector.Error as err:
+        print(f"Error fetching resume skills: {err}")
+        return []
+    finally:
+        cursor.close()
+        close_db_connection(connection)
 
-    # Close the database connection
-    connection.close()
+# def recommend_jobs(resume_skills, job_listings):
+    recommended_jobs = []
 
-    return job_listings
+    for job in job_listings:
+        title, skills_required = job
+        job_skills = set(skills_required.split(","))
 
-# ... (other code for parsing resume and recommending jobs)
+        common_skills = set(resume_skills) & job_skills
+        match_score = len(common_skills) / len(job_skills)
+
+        recommended_jobs.append({
+            "title": title,
+            "match_score": match_score
+        })
+
+    recommended_jobs.sort(key=lambda x: x["match_score"], reverse=True)
+
+    return recommended_jobs
 
 def recommend_jobs(resume_skills, job_listings):
     recommended_jobs = []
 
     for job in job_listings:
-        # Extract skills required for the job
-        des = job[1].split(",")  # Assuming skills are stored as a comma-separated string
+        title, description = job
+        
+        # Split the job description into words
+        job_description_words = description.split()
+        
+        # Find common words between resume skills and job description
+        common_words = set(resume_skills) & set(job_description_words)
+        
+        # Calculate a match score based on the number of common words
+        match_score = len(common_words) / len(job_description_words)
 
-        # Calculate the intersection of resume skills and job skills
-        common_skills = set(resume_skills) & set(des)
-
-        # Calculate a match score based on the number of common skills
-        match_score = len(common_skills) / len(des)
-
-        # Add the job to the recommended list with the match score
         recommended_jobs.append({
-            "title": job[0],  # Job title is at index 0
+            "title": title,
             "match_score": match_score
         })
 
-    # Sort recommended jobs by match score (highest match first)
     recommended_jobs.sort(key=lambda x: x["match_score"], reverse=True)
 
     return recommended_jobs
 
 if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        print("Usage: python resume_parser.py <resume.pdf>")
-        sys.exit(1)
+    resume_skills = fetch_resume_skills()
+    job_listings = fetch_job_listings()
 
-    pdf_path = sys.argv[1]
-    resume_text = extract_text_from_pdf(pdf_path)
+    if resume_skills and job_listings:
+        recommendations = recommend_jobs(resume_skills, job_listings)
 
-    extracted_fields = extract_fields(resume_text)
-
-    # Print the extracted fields
-    for field, value in extracted_fields.items():
-        if value:
-            if isinstance(value, list):
-                print(f"{field}:", value)
-            else:
-                print(f"{field}:", value)
-
-    # Extract resume skills (you can replace these with actual extracted skills)
-    resume_skills = extracted_fields.get("Skills", [])
-
-    # Fetch job listings from the database
-    job_listings = fetch_job_listings_from_database()
-
-    # Get job recommendations based on resume skills and fetched job listings
-    recommendations = recommend_jobs(resume_skills, job_listings)
-
-    # Print recommended jobs
-    print("\nRecommended Jobs:")
-    for job in recommendations:
-        print(f"{job['title']} (Match Score: {job['match_score']:.2f})")
+        if recommendations:
+            print("\nRecommended Jobs:")
+            for job in recommendations:
+                print(f"\n{job['title']} (Match Score: {job['match_score']:.2f})")
+        else:
+            print("No job recommendations.")
+    else:
+        print("Failed to retrieve resume skills or job listings. Check your database connection.")

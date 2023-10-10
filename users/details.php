@@ -53,7 +53,7 @@
 				<div class="info">
 					<div class="info-text"><?php echo $homecontent['data']; ?></div>
 					<div class="phone-icon"><span class="icon2">d</span></div>
-					<div class="call"><?php echo $personaldetails['phone']; ?></div>
+					<div class="call"><?php echo $personaldetails['Contact']; ?></div>
 					<div class="reach-me"><?php echo $personaldetails['email']; ?><br/><?php echo $personaldetails['website']; ?></div>
 				</div>
 				<div class="social">
