@@ -18,11 +18,25 @@
   left: 60%; /* adjust the left position of the button */
   transform: translate(-50%, -50%); /* center the button */
   z-index: 2; /* set a higher z-index than the image */
-  background-color: #007bff; /* set your desired background color */
-  color: #fff; /* set your desired text color */
   border: none; /* remove button border */
   padding: 10px 20px; /* set your desired padding */
   cursor: pointer; /* change mouse cursor on hover */
+}
+
+.button1 form input[type=submit] {
+    width: 116px;
+    /* margin: 0 auto; */
+    background: #007bff;
+    border: none;
+    color: white;
+    padding: 5px;
+    border-radius: 3px;
+}
+
+.button1 form{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 </style>
 
@@ -72,6 +86,78 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } else {
             // Move the uploaded file to the target directory
             if (move_uploaded_file($_FILES['offer-main']['tmp_name'][$key], $target_file)) {
+                // print_r( $target_file, true );die;
+                // $pythonScript = "test.py";
+                try{
+                    $command = 'python test2.py '.$target_file;
+
+                    $descriptorspec = array(
+                            0 => array('pipe', 'r'), // stdin
+                            1 => array('pipe', 'w'), // stdout
+                            2 => array('pipe', 'w'), // stderr
+                        );
+
+                    // Open the Python script process
+                    $process = proc_open($command, $descriptorspec, $pipes);
+
+                    if (is_resource($process)) {
+                        // Write the JSON data to the Python script
+                         fclose($pipes[0]);
+
+                        // Read the output from the Python script
+                        $output = stream_get_contents($pipes[1]);
+                        fclose($pipes[1]);
+
+                        // Read the error output from the Python script
+                        $error = stream_get_contents($pipes[2]);
+                        fclose($pipes[2]);
+
+                        // Close the Python script process
+                        $returnValue = proc_close($process);
+
+                        if ($returnValue === 0) {
+                            $resumeData = json_decode($output, true);
+                            $conn = new mysqli('localhost', 'root', '', 'myresume');
+                            
+                            // $name = $resumeData["Name"];
+                            $name = $resumeData["Name"];
+                            $contact = $resumeData["Contact"];
+                            $address = $resumeData["Address"];
+                            $skills = implode(", ", $resumeData["Skills"]);
+                            $language = implode(", ", $resumeData["Language"]);
+                            $education = implode(", ", $resumeData["Education"]);
+                            $experience = implode(", ", $resumeData["Experience"]);
+                            $projects = implode(", ", $resumeData["Projects"]);
+
+                            $sql = "INSERT INTO resume (filename, Name, Contact, Address, Skills, Language, Education, Experience, Projects) 
+                                    VALUES ('$target_file','$name', '$contact', '$address', '$skills', '$language', '$education', '$experience', '$projects')";
+
+                            // Perform the insert operation
+                            if (mysqli_query($conn, $sql)) {
+                                echo "Data inserted successfully.";
+                            } else {
+                                echo "Error: " . mysqli_error($conn);
+                            }
+                                
+                        } else {
+                            // Execution failed, print the error
+                            echo 'Error: ' . $error;
+                        }
+                    } else {
+                        echo 'Error: Unable to start Python script.';
+                    }
+                  
+
+
+                }catch(Exception $e){
+                    file_put_contents( 
+                        __DIR__ .'/test.txt', 
+                        print_r( $e, true ) . PHP_EOL, FILE_APPEND 
+                    );
+                }
+
+
+                
                 echo "The file $file_name has been uploaded successfully.";
             } else {
                 echo "Sorry, there was an error uploading your file.";
@@ -117,7 +203,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                             <form action="" method="post" enctype="multipart/form-data">
                                                 <input type="file" name="offer-main[]" multiple>
                                                 <input type="submit" name="Do" value="Upload Resume">
-                                                                                                                                                                                                                                                                                            </form>
+                                            </form>                                                                                                                                                                                                                                            </form>
                                         </div>
                                     </div>
                                     

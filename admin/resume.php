@@ -54,11 +54,13 @@
                                     <th>S.No</th>
                                     <th>File Name</th>
                                     <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Mobile</th>
-                                    <th>Place</th>
-                                    <th>DOB</th>
-                                    <th>Date</th>
+                                    <th>Contact</th>
+                                    <th>Address</th>
+                                    <th>Skills</th>
+                                    <th>Language</th>
+                                    <th>Experience</th>
+                                    <th>Education</th>
+                                    <th>Projects</th>
                                     
                                   </tr>
                                 </thead>
@@ -79,23 +81,25 @@
                                                 ?><td><?php echo $i;
                                                 $i++;
                                                 ?></td><?php
-                                                ?><td><a href="<?php echo $resume['filename'] ?>" target="_blank"><?php echo $resume['filename'];
+                                                ?><td><a href="../users/<?php echo $resume['filename'] ?>" target="_blank"><?php echo $resume['filename'];
                                                 ?></a></td><?php
-                                                ?><td><?php echo $resume['name'];
+                                                ?><td><?php echo $resume['Name'];
                                                 ?></td><?php
-                                                ?><td><?php echo $resume['email'];
+                                                ?><td><?php echo $resume['Contact'];
                                                 ?></td><?php
-                                                ?><td><?php echo $resume['mobile'];
+                                                ?><td><?php echo $resume['Address'];
                                                 ?></td><?php
-                                                ?><td><?php echo $resume['place'];
+                                                ?><td><?php echo $resume['Skills'];
                                                 ?></td><?php
-                                                ?><td><?php echo $resume['DOB'];
+                                                ?><td><?php echo $resume['Language'];
                                                 ?></td><?php
-                                                ?><td><?php echo $resume['date'];
+                                                ?><td><?php echo $resume['Experience'];
                                                 ?></td><?php
+                                                ?><td><?php echo $resume['Education'];
+                                                ?></td><?php 
                                                 ?><td>
-                                <?php
-                                                ?></tr><?php
+                                <?php echo $resume['Projects'];
+                                                ?></tr><?php 
 
                                             }
                                         ?>

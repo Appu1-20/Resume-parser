@@ -1,14 +1,14 @@
-<?php
 -- phpMyAdmin SQL Dump
--- version 4.6.4
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 30, 2017 at 10:34 AM
--- Server version: 5.7.14
--- PHP Version: 5.6.25
+-- Generation Time: Oct 10, 2023 at 01:16 PM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `wtproject2017`
+-- Database: `myresume`
 --
 
 -- --------------------------------------------------------
@@ -34,15 +34,15 @@ CREATE TABLE `education` (
   `college` varchar(30) NOT NULL,
   `course` varchar(30) NOT NULL,
   `description` text NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `education`
 --
 
 INSERT INTO `education` (`eduid`, `fromyear`, `toyear`, `college`, `course`, `description`) VALUES
-(1, '2002', '2005', 'CONSECTETUR ADIPISICING ELIT', 'WEB DESIGN', 'Web Designing course '),
-(2, '2007', '2009', 'SED DO EIUSMOD', 'GRAPHIC DESIGN', 'Graphic Design course');
+(1, '2002', '2005', 'Everest Innovative College', 'WEB DESIGN', 'Web Designing course '),
+(2, '2007', '2009', 'TU', 'GRAPHIC DESIGN', 'Graphic Design course');
 
 -- --------------------------------------------------------
 
@@ -57,16 +57,38 @@ CREATE TABLE `employment` (
   `company` varchar(30) NOT NULL,
   `designation` varchar(30) NOT NULL,
   `description` text NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `employment`
 --
 
 INSERT INTO `employment` (`empid`, `fromyear`, `toyear`, `company`, `designation`, `description`) VALUES
-(1, '2005', '2007', 'COMMODO CONSEQUAT', 'WEB DESIGNER', 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.'),
-(2, '2009', '2012', 'SED DO EIUSMOD', 'SENIOR DESIGNER', 'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'),
-(3, '2012', 'present', 'COMMODO CONSEQUAT', 'ART DIRECTOR', 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.');
+(1, '2005', '2007', 'Ebee Company ', 'WEB DESIGNER', 'I worked as a web designer.'),
+(2, '2009', '2012', 'Astute Company', 'SENIOR DESIGNER', 'Worked as a senior graphic designer handling all the members.'),
+(3, '2012', 'present', 'Moru Company', 'ART DIRECTOR', 'Worked as a art director and designed arts.');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jobs`
+--
+
+CREATE TABLE `jobs` (
+  `jid` int(20) NOT NULL,
+  `jtitle` varchar(100) NOT NULL,
+  `jdes` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `jobs`
+--
+
+INSERT INTO `jobs` (`jid`, `jtitle`, `jdes`) VALUES
+(1, 'Wordpress', 'Designed Prospectus, Banner and Logo.'),
+(2, 'PHP', 'gsagggs'),
+(3, 'Python', 'asas'),
+(4, 'as', 'as');
 
 -- --------------------------------------------------------
 
@@ -78,14 +100,14 @@ CREATE TABLE `pages` (
   `pid` int(11) NOT NULL,
   `page` varchar(20) NOT NULL,
   `data` text NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `pages`
 --
 
 INSERT INTO `pages` (`pid`, `page`, `data`) VALUES
-(1, 'home', '<p>Stylish, flat, easy customizable and awesome looking wordpress theme with original icons!</p>');
+(1, 'home', '<p>I am enthusisastic and love working with new people.</p>');
 
 -- --------------------------------------------------------
 
@@ -102,14 +124,16 @@ CREATE TABLE `personal` (
   `phone` varchar(30) NOT NULL,
   `email` varchar(20) NOT NULL,
   `website` varchar(50) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `personal`
 --
 
 INSERT INTO `personal` (`uid`, `image`, `fname`, `lname`, `designation`, `phone`, `email`, `website`) VALUES
-(1, 'images/user_photo.jpg', 'John', 'Johnson', 'Graphic & Web Designer', '+91 9898989898', 'J.johnson@gmail.com', 'http://www.jjohnson.com');
+(1, 'images/6437.jpg', 'Apeksha ', 'Kafle', 'Graphic & Web Designer', '9861314175', 'appukafle@gmail.com', 'http://www.appu.com'),
+(2, 'images/4918050.jpg', 'Sabin', 'ssasjjha', 'Sajsksa', '', '', ''),
+(7, 'images/Rogan-Josh-by-PictureTheRecipe-Featured-1-395x500.jpg', 'Sabin', 'Bhurel', 'Test', '9808770040', 'sabinbhurtel@gmail.c', 'test.com');
 
 -- --------------------------------------------------------
 
@@ -123,17 +147,47 @@ CREATE TABLE `projects` (
   `title` varchar(30) NOT NULL,
   `subtitle` varchar(30) NOT NULL,
   `filter` varchar(20) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `projects`
 --
 
 INSERT INTO `projects` (`pid`, `photo`, `title`, `subtitle`, `filter`) VALUES
-(1, 'images/portfolio1.jpg', 'Vestibulum varius ligula', 'Vivamus suscipit sem', 'web'),
-(2, 'images/portfolio4.jpg', 'Vestibulum varius ligula', 'Vivamus suscipit sem', 'graphic'),
-(3, 'images/portfolio6.jpg', 'Vestibulum varius ligula', 'Vivamus suscipit sem', 'photo'),
-(4, 'images/portfolio10.jpg', 'Vestibulum varius ligula', 'Vivamus suscipit sem', 'photo');
+(1, 'images/portfolio1.jpg', 'Photo Manipulation', 'Worked on adobe ', 'web'),
+(2, 'images/portfolio4.jpg', 'Photo Edit', 'Photo editor using Editor', 'graphic'),
+(3, 'images/portfolio6.jpg', 'Branding', 'For icecream brand', 'photo'),
+(4, 'images/portfolio10.jpg', 'Photo Edit', 'Using Lightroom', 'photo');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `resume`
+--
+
+CREATE TABLE `resume` (
+  `rid` int(20) NOT NULL,
+  `filename` varchar(100) NOT NULL,
+  `Name` varchar(100) NOT NULL,
+  `Contact` int(20) NOT NULL,
+  `Address` varchar(100) NOT NULL,
+  `Skills` text NOT NULL,
+  `Language` text NOT NULL,
+  `Education` text NOT NULL,
+  `Experience` text NOT NULL,
+  `Projects` text NOT NULL,
+  `date` date NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `resume`
+--
+
+INSERT INTO `resume` (`rid`, `filename`, `Name`, `Contact`, `Address`, `Skills`, `Language`, `Education`, `Experience`, `Projects`, `date`) VALUES
+(1, 'Apekshacv.pdf', 'Apeksha Kafle', 217368213, 'Tinthana, Kathmandu', '', '', '', '', '', '2023-08-01'),
+(0, 'resume/', 'Raja Ram Bhurtel', 2147483647, 'Thankot', 'C++, Python', 'Nepali', '+2, BCA', '2 years as a backend developer', 'Wordpress, SMS', '2023-10-10'),
+(0, 'resume/Screenshot (4).png', 'Raja Ram Bhurtel', 2147483647, 'Thankot', 'C++, Python', 'Nepali', '+2, BCA', '2 years as a backend developer', 'Wordpress, SMS', '2023-10-10'),
+(0, 'resume/cv1.pdf', 'Raja Ram Bhurtel', 2147483647, 'Thankot', 'C++, Python', 'Nepali', '+2, BCA', '2 years as a backend developer', 'Wordpress, SMS', '2023-10-10');
 
 -- --------------------------------------------------------
 
@@ -146,7 +200,7 @@ CREATE TABLE `skills` (
   `skilltype` varchar(20) NOT NULL,
   `skill` varchar(50) NOT NULL,
   `skillvalue` int(11) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `skills`
@@ -177,7 +231,7 @@ CREATE TABLE `social` (
   `twitter` varchar(255) NOT NULL,
   `googleplus` varchar(255) NOT NULL,
   `instagram` varchar(255) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `social`
@@ -195,15 +249,27 @@ INSERT INTO `social` (`uid`, `facebook`, `twitter`, `googleplus`, `instagram`) V
 CREATE TABLE `user` (
   `uid` int(11) NOT NULL,
   `uname` varchar(50) NOT NULL,
-  `upass` varchar(255) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `lname` varchar(200) NOT NULL,
+  `upass` varchar(255) NOT NULL,
+  `email` varchar(200) NOT NULL,
+  `user_type` int(10) NOT NULL DEFAULT 0,
+  `photo` varchar(20) NOT NULL,
+  `status` int(1) NOT NULL,
+  `activate_code` varchar(20) NOT NULL,
+  `created_on` date NOT NULL DEFAULT current_timestamp()
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`uid`, `uname`, `upass`) VALUES
-(1, 'admin@gmail.com', '$2y$10$JEMq0AXzJh4rEYMO7TpuouTAKWwTtxoBC8CJxmotlJkF6krHtoGve');
+INSERT INTO `user` (`uid`, `uname`, `lname`, `upass`, `email`, `user_type`, `photo`, `status`, `activate_code`, `created_on`) VALUES
+(1, 'admin', '', '$2y$10$VWP1On4Kq5pb5kZ6q2oIHuSipSOegnjU.og5orCTjRufYAALKsrWK', 'admin@gmail.com', 0, '', 0, '', '2023-08-08'),
+(2, 'sabin', '', '4f8de24d6093ac5d25c7cfafc474d49f', 'appukafle@gmail.com', 0, '', 0, '', '2023-08-08'),
+(3, 'Sami', '', '4f8de24d6093ac5d25c7cfafc474d49f', 'sami33@gmail.com', 1, '', 0, '', '2023-08-08'),
+(4, 'Prabha', '', 'a803b68599c7e5fecd909fd9dbff44b1', 'prabha@gmail.com', 0, '', 0, '', '2023-08-13'),
+(5, 'Hari', 'Khadka', 'a9bcf1e4d7b95a22e2975c812d938889', 'hari@gmail.com', 0, '', 0, '', '2023-09-30'),
+(7, 'Sabin', '', 'b12a7db8a9df15e19cdce7d30839dfb4', 'sabinbhurtel@gmail.com', 0, '', 0, '', '2023-10-04');
 
 --
 -- Indexes for dumped tables
@@ -220,6 +286,12 @@ ALTER TABLE `education`
 --
 ALTER TABLE `employment`
   ADD PRIMARY KEY (`empid`);
+
+--
+-- Indexes for table `jobs`
+--
+ALTER TABLE `jobs`
+  ADD PRIMARY KEY (`jid`);
 
 --
 -- Indexes for table `pages`
@@ -266,31 +338,44 @@ ALTER TABLE `user`
 --
 ALTER TABLE `education`
   MODIFY `eduid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
 --
 -- AUTO_INCREMENT for table `employment`
 --
 ALTER TABLE `employment`
-  MODIFY `empid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `empid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `jobs`
+--
+ALTER TABLE `jobs`
+  MODIFY `jid` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
 --
 -- AUTO_INCREMENT for table `pages`
 --
 ALTER TABLE `pages`
   MODIFY `pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
 --
 -- AUTO_INCREMENT for table `projects`
 --
 ALTER TABLE `projects`
   MODIFY `pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
 --
 -- AUTO_INCREMENT for table `skills`
 --
 ALTER TABLE `skills`
   MODIFY `skillid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `uid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `uid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+COMMIT;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

@@ -1,0 +1,52 @@
+
+Recommended Jobs:
+Graphic Designer (Match Score: 0.00)
+gsagggs (Match Score: 0.00)
+asas (Match Score: 0.00)
+as (Match Score: 0.00)
+
+Name: Raja Ram Bhurtel
+Contact: 9843829746
+Address: Thankot
+Skills: ['C++, Python']
+Language: ['Nepali']
+Education: ['+2, BCA']
+Experience: ['2 years as a backend developer']
+Projects: ['Wordpress, SMS']
+
+Recommended Jobs:
+Graphic Designer (Match Score: 0.00)
+gsagggs (Match Score: 0.00)
+asas (Match Score: 0.00)
+as (Match Score: 0.00)
+
+Name: Raja Ram Bhurtel
+Contact: 9843829746
+Address: Thankot
+Skills: ['C++, Python']
+Language: ['Nepali']
+Education: ['+2, BCA']
+Experience: ['2 years as a backend developer']
+Projects: ['Wordpress, SMS']
+
+Recommended Jobs:
+Wordpress (Match Score: 0.00)
+PHP (Match Score: 0.00)
+asas (Match Score: 0.00)
+as (Match Score: 0.00)
+
+Name: Raja Ram Bhurtel
+Contact: 9843829746
+Address: Thankot
+Skills: ['C++, Python']
+Language: ['Nepali']
+Education: ['+2, BCA']
+Experience: ['2 years as a backend developer']
+Projects: ['Wordpress, SMS']
+
+Recommended Jobs:
+Wordpress (Match Score: 0.00)
+PHP (Match Score: 0.00)
+Python (Match Score: 0.00)
+as (Match Score: 0.00)
+
